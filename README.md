@@ -43,7 +43,7 @@ To use this controller, you must place the application folder inside the firmwar
 In order to use the LQR controller, you need to go into the Python GUI:
 `cfclient`
 In the GUI click on "View" -> "Parameters" -> select stabilizer.controller and set it to 6 to activate the Out-of-Tree-Controller
-
+![Project Screenshot](./images/Crazyflie_GUI.png)
 ## Build & Flash Instructions
 
 ### 1. Build the Firmware
