@@ -1,11 +1,11 @@
 # LQR Controller for Crazyflie
 
-This repository implements a Linear Quadratic Regulator (LQR) controller for the Crazyflie 2.X drone. It is designed to be built as an **App Layer** in the **Out-of-Tree-Controller** example within the Crazyflie firmware file structure.
+This repository implements a Linear Quadratic Regulator (LQR) controller for the Crazyflie 2.X drone. It is designed to be built as an **App Layer** using the **Out-of-Tree-Controller** capability within the Crazyflie firmware structure.
 
 ## Repository Structure
 
 - **`app-lqr/`**: Contains the C source code and Makefile.
-  - `src/`: Source files implementing the control logic.
+  - `src/`: Source files implementing the control logic (check `lqr_controller.c` for gain definitions).
   - `Makefile`: Build configuration.
 - **`lqr_params.m`**: MATLAB script used to calculate the optimal gain matrix ($K$) based on the system model and cost weights ($Q$ and $R$).
 
@@ -19,8 +19,8 @@ To build, flash, and control this system, you need:
     ```
 2.  **Crazyflie Python Client**: Required for the control GUI and setting parameters.
     - [Installation Instructions](https://github.com/bitcraze/crazyflie-clients-python)
-3.  **Toolchain**: Ensure you have the ARM GCC toolchain installed and in your path.
-4.  **MATLAB** (Optional): Required if you wish to re-tune the LQR gains.
+3.  **Toolchain**: Ensure you have the ARM GCC toolchain installed and in your system path.
+4.  **MATLAB** (Optional): Required if you wish to re-tune the LQR gains for different hardware configurations.
 
 ## Installation & Setup
 
@@ -34,21 +34,35 @@ To use this controller, you must place the application folder inside the firmwar
     crazyflie-firmware/
     ├── src/
     ├── examples/
-    │   ├── app-lqr/       <-- Put the folder here
+    │   ├── app-lqr/        <-- Put the folder here
     │   │   ├── src/
     │   │   ├── Makefile
     │   ├── helloworld/
     │   └── ...
     ```
-In order to use the LQR controller, you need to go into the Python GUI:
-`cfclient`
-In the GUI click on "View" -> "Parameters" -> select stabilizer.controller and set it to 6 to activate the Out-of-Tree-Controller
-![Project Screenshot](./images/Crazyflie_GUI.png)
+
+## Tuning & Code Generation
+
+> The control gains ($K$) currently implemented in `src/` are tuned specifically for a **stock Crazyflie 2.0**. 
+>
+> If you are using a **Crazyflie 2.1** (which uses different brushless motors/ESC handling) or if you have attached **Expansion Decks** that alter the drone's total mass, you should update 'lqr_params.m' to prevent instability.
+
+### How to Update Gains
+1.  **Configure Parameters**: Open `lqr_params.m` in MATLAB. Update the system parameters (mass `m`, inertia `Ixx`, `Iyy`, `Izz`) to match your specific drone configuration.
+2.  **Generate Lookup Table**: Run the script.
+    * The script calculates the optimal Linear Quadratic Regulator gains.
+    * It outputs a formatted **C-code Lookup Table** (array) in the MATLAB Command Window.
+3.  **Update Firmware**:
+    * Copy the generated text from the MATLAB output.
+    * Open `app-lqr/src/lqr_controller.c`.
+    * Replace the existing `K` matrix definition with the new values.
+    * Save the file.
+
 ## Build & Flash Instructions
 
-### 1. Build the Firmware
-Navigate to the new folder inside the firmware and compile:
+Once your gains are set, navigate to the new folder inside the firmware and compile:
 
 ```bash
 cd crazyflie-firmware/examples/app-lqr
 make
+cload  # Or use your preferred method to flash (e.g., make cload)
