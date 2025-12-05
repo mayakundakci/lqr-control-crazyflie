@@ -40,12 +40,7 @@ To use this controller, you must place the application folder inside the firmwar
     │   ├── helloworld/
     │   └── ...
     ```
-3. Launch the Crazyflie Client Python GUI 'cfclient'
-
-![Project Screenshot](./images/Crazyflie_GUI.png)
-  
-4. Click "View" -> "Parameters" -> "stabilizer.controller" -> set the controller to 6
-
+    
 ## Tuning & Code Generation
 
 > The control gains ($K$) currently implemented in `src/` are tuned specifically for a **stock Crazyflie 2.0**. 
@@ -65,9 +60,50 @@ To use this controller, you must place the application folder inside the firmwar
 
 ## Build & Flash Instructions
 
-Once your gains are set, navigate to the new folder inside the firmware and compile:
+Once your gains are set and the ($K$) matrix is updated:
 
-```bash
-cd crazyflie-firmware/examples/app-lqr
-make
-cload  # Or use your preferred method to flash (e.g., make cload)
+   ```bash
+   cd crazyflie-firmware/examples/app-lqr
+   make
+   cload  # Or use your preferred method to flash (e.g., make cload from the firmware root)
+   ```
+---
+
+## Usage
+
+1. **Launch the Crazyflie Python Client GUI**
+
+   ```bash
+   cfclient
+   ```
+
+   ![Crazyflie GUI](./images/Crazyflie_GUI.png)
+
+2. **Connect to Your Crazyflie**
+
+   * Power on the drone.
+   * Connect via radio or USB (depending on your setup) using the Crazyflie Client.
+
+3. **Select the LQR Out-of-Tree Controller**
+
+   * In the GUI, click:
+     **View → Parameters**
+   * In the Parameters tab, search for `stabilizer.controller`.
+   * Set `stabilizer.controller` to **6**.
+     This activates the **Out-of-Tree Controller** (your LQR implementation in `app-lqr`).
+
+---
+
+## References
+
+* **Bitcraze Out-of-Tree Development** – Documentation on building custom controllers as an app layer:
+  [https://www.bitcraze.io/documentation/repository/crazyflie-firmware/master/development/oot/](https://www.bitcraze.io/documentation/repository/crazyflie-firmware/master/development/oot/)
+
+* **Bitcraze Controller Documentation** – Overview of the sensor-to-control pipeline and controller architecture:
+  [https://www.bitcraze.io/documentation/repository/crazyflie-firmware/master/functional-areas/sensor-to-control/controllers/](https://www.bitcraze.io/documentation/repository/crazyflie-firmware/master/functional-areas/sensor-to-control/controllers/)
+
+* **Crazyflie Tools (blandry)** – Reference repository for Crazyflie control tools and utilities:
+  [https://github.com/blandry/crazyflie-tools](https://github.com/blandry/crazyflie-tools)
+
+  
+
