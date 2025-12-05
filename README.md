@@ -1,6 +1,6 @@
 # LQR Controller for Crazyflie
 
-This repository implements a Linear Quadratic Regulator (LQR) controller for the Crazyflie 2.X drone. It is designed to be built as an **App Layer** example within the Crazyflie firmware file structure.
+This repository implements a Linear Quadratic Regulator (LQR) controller for the Crazyflie 2.X drone. It is designed to be built as an **App Layer** in the **Out-of-Tree-Controller** example within the Crazyflie firmware file structure.
 
 ## Repository Structure
 
@@ -40,6 +40,9 @@ To use this controller, you must place the application folder inside the firmwar
     │   ├── helloworld/
     │   └── ...
     ```
+In order to use the LQR controller, you need to go into the Python GUI:
+`cfclient`
+In the GUI click on "View" -> "Parameters" -> select stabilizer.controller and set it to 6 to activate the Out-of-Tree-Controller
 
 ## Build & Flash Instructions
 
