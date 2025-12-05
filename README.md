@@ -40,6 +40,11 @@ To use this controller, you must place the application folder inside the firmwar
     │   ├── helloworld/
     │   └── ...
     ```
+3. Launch the Crazyflie Client Python GUI 'cfclient'
+
+![Project Screenshot](./images/Crazyflie_GUI.png)
+  
+4. Click "View" -> "Parameters" -> "stabilizer.control" -> set the controller to 6
 
 ## Tuning & Code Generation
 
