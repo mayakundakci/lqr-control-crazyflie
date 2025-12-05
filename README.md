@@ -44,7 +44,7 @@ To use this controller, you must place the application folder inside the firmwar
 
 ![Project Screenshot](./images/Crazyflie_GUI.png)
   
-4. Click "View" -> "Parameters" -> "stabilizer.control" -> set the controller to 6
+4. Click "View" -> "Parameters" -> "stabilizer.controller" -> set the controller to 6
 
 ## Tuning & Code Generation
 
